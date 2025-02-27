@@ -21,24 +21,8 @@ public class SpriteStackCameraControl : MonoBehaviour
     {
         float degreeHorizontal = 0;
         float degreeVertical = 0;
-
-        // 检测按键输入
-        if (Input.GetKey(KeyCode.W))
-        {
-            degreeVertical = 1;
-        }
-        if (Input.GetKey(KeyCode.S))
-        {
-            degreeVertical = -1;
-        }
-        if (Input.GetKey(KeyCode.A))
-        {
-            degreeHorizontal = 1;
-        }
-        if (Input.GetKey(KeyCode.D))
-        {
-            degreeHorizontal = -1;
-        }
+        degreeVertical = Input.GetAxis("Vertical");        
+        degreeHorizontal = -1 * Input.GetAxis("Horizontal");        
 
         // 旋转方向
         Quaternion rot = Quaternion.identity;
@@ -88,58 +72,7 @@ public class SpriteStackCameraControl : MonoBehaviour
         // 平滑更新相机位置
         cameraTransform.position = Vector3.Lerp(cameraTransform.position, transform.position + direction * distance, rotate_speed * Time.deltaTime);
     }
-    /*
-    void Update()
-    {
-        float degreeHorizontal = 0;
-        float degreeVertical = 0;
-        if (Input.GetKey(KeyCode.W))
-        {
-            degreeVertical = 1;
-        }
-        if (Input.GetKey(KeyCode.S))
-        {
-            degreeVertical = -1;
-        }
-        if (Input.GetKey(KeyCode.A))
-        {
-            degreeHorizontal = -1;
-        }
-        if (Input.GetKey(KeyCode.D))
-        {
-            degreeHorizontal = 1;
-        }
-        Quaternion rot = Quaternion.Euler(degreeVertical * rotate_speed * Time.deltaTime, 0, degreeHorizontal * rotate_speed * Time.deltaTime);
-
-        direction = rot * direction.normalized;
-        Debug.DrawLine(cameraTransform.position, cameraTransform.position - direction * distance, Color.red);
-
-
-
-        cameraTransform.position = transform.position;
-
-        cameraTransform.position = transform.position + direction * distance;
-
-        var targetRight = Vector3.Cross(direction, Vector3.forward);
-        Vector3 target_up = Vector3.Cross(direction, targetRight);
-
-        Quaternion targetRotation = Quaternion.LookRotation(direction, target_up);
-
-        cameraTransform.rotation = targetRotation;
-        // var rot2 = Quaternion.FromToRotation(cameraTransform.forward, direction);
-        // cameraTransform.rotation = rot2 * cameraTransform.rotation;
-
-        // cameraTransform.forward = direction.normalized;
-
-
-        // var targetRight = Vector3.Cross(direction, Vector3.forward);
-        // var rot2 = Quaternion.FromToRotation(cameraTransform.right, targetRight);
-        // cameraTransform.rotation = rot2 * cameraTransform.rotation;
-    }
-
-
-    */
-
+    
     IEnumerator ResetCameraRotation()
     {
         yield return new WaitForSeconds(0.1f);
